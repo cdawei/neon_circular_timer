@@ -134,12 +134,10 @@ class NeonCircularTimerState extends State<NeonCircularTimer>
       (_controller!.duration! * _controller!.value).inSeconds;
 
   void _setAnimation() {
-    if (widget.autoStart) {
-      if (widget.isReverse) {
-        _controller!.reverse(from: 1);
-      } else {
-        _controller!.forward();
-      }
+    if (widget.isReverse) {
+      _controller!.reverse(from: 1);
+    } else {
+      _controller!.forward();
     }
   }
 
@@ -157,14 +155,16 @@ class NeonCircularTimerState extends State<NeonCircularTimer>
     widget.controller?._initialDuration = widget.initialDuration;
     widget.controller?._duration = widget.duration;
 
-    if (widget.initialDuration > 0 && widget.autoStart) {
+    if (widget.initialDuration >= 0) {
       if (widget.isReverse) {
         _controller?.value = 1 - (widget.initialDuration / widget.duration);
       } else {
         _controller?.value = (widget.initialDuration / widget.duration);
       }
 
-      widget.controller?.start();
+      if (widget.autoStart) {
+        widget.controller?.start();
+      }
     }
   }
 
